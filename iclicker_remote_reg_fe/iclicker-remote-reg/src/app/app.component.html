@@ -1,0 +1,181 @@
+<div class="container-fluid">
+  <div *ngIf="loader" class="spinner-border" role="status" style="width:10rem;height:10rem;position: absolute;margin:20% 40%;z-index:3">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div *ngIf="loader" id="pano"></div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 heading">
+      Register your iClicker
+    </div>
+  </div>
+  <div class="row" [ngClass] ="{'blur':loader}">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      <div style="color:red;">Please use Chrome browser for the best registration experience.</div>
+      <div>Enter your 8-character remote ID and other information below…</div>
+      <form style="margin-top: 1em;">
+        <div class="form-group mb-3">
+          <label for="remoteId">Remote ID:</label>
+          <input type="text" name="clickerId" class="form-control" id="remoteId" [(ngModel)]="clickerId" aria-describedby="Remote Id" placeholder="Enter Remote Id" required>
+        </div>
+        <div class="form-group mb-3">
+          <label for="email">Email address</label>
+          <input type="email" name="emailId" class="form-control" [(ngModel)]="emailId" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+        </div>
+        <div class="form-group mb-3">
+          <label for="country">Country</label>
+          <select class="form-select" id="country" [(ngModel)]="country.countryCode" name="country">
+            <option *ngFor="let x of countries" [value]="x.countryCode" [selected]="country.countryCode == x.countryCode">{{x.countryName}}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="register()">Register</button>
+      </form>
+      <table class="table" *ngIf="clickerRegs.length">
+        <thead>
+          <tr>
+            <th scope="col">Remote ID</th>
+            <th scope="col">Country</th>
+            <th scope="col">Date Registered</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let clicker of clickerRegs">
+            <td scope="col">{{clicker.clickerId}}</td>
+            <td scope="col">{{clicker.countryCode}}</td>
+            <td scope="col">{{clicker.dateAdded}}</td>
+            <td scope="col" style="text-decoration: underline;color:blue;cursor: pointer;" (click)="removeClickerId(clicker)">Remove</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      <div style="text-align: center;font-size: 1.5em;font-weight: 700;">
+        iClicker Student Registration FAQ
+      </div>
+      <div id="accordion" class="accordion" style="margin-top: 2em;">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Where do I find my remote ID?
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Your iClicker remote ID is printed on a sticker located on the back of your remote. The ID is the 8-character code below the barcode. Newer original iClicker remotes have a secondary ID location behind the battery compartment and iClicker 2 remotes display the ID upon power up. The remote ID will only contain letters A-F and numbers 0-9.
+                <img src="https://minisite.iclicker.com/images/clickerID.png" alt="i>clicker remote">
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                What do I do if my registration fails in Safari?
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                If you cannot register your remote using Safari, please use a different browser, such as Chrome or Firefox.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                What do I do if I cannot read the ID printed on my remote?
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                If your remote ID has rubbed off or is illegible and you do not have a secondary ID location on your remote, go to <a id="HyperLink1" href="https://support.iclicker.com/" target="_blank" style="color:blue;">support.iclicker.com/</a> for troubleshooting instructions.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                Why do I get an “Invalid Remote ID” error when I try to register my remote?
+              </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Your remote ID is an 8-character code that should only contain letters A-F and numbers 0-9. Make sure you are not entering the letter "O" for the number "0" or the letter "I" for the number "1."
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFive">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                I've lost/broken my remote. Can I register another remote?
+              </button>
+            </h2>
+            <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Yes, you may register multiple remotes for any reason. iClicker will link both remotes to your name so that you receive credit for votes you made with either remote.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSix">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+               If I register a remote in my LMS, does that automatically mean I can use it in all my classes?
+              </button>
+            </h2>
+            <div id="collapseSix" class="accordion-collapse collapse show" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              No, registering a remote does not automatically mean you will be able to use it in your classes. Your instructor must allow iClicker and register his or her course to communicate with iClicker servers. Also, some campuses or classrooms may not have the infrastructure to support iClicker use. Check with your instructor to be sure that iClicker is allowed and supported for your course.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSeven">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+               I registered my remote, why is my registration still not appearing in class?
+              </button>
+            </h2>
+            <div id="collapseSeven" class="accordion-collapse collapse show" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Your instructor needs to synchronize his or her gradebook to get the latest registration information. It may be that your instructor has not done this since you registered. Your in-class votes were recorded by iClicker and once you register your remote, these votes will be associated with you the next time your instructor syncs the course gradebook or roster.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingEight">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                I use my remote for multiple classes. Do I need to register my information for each class?
+              </button>
+            </h2>
+            <div id="collapseEight" class="accordion-collapse collapse show" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                No, you only need to register in one location. Once registered, your information will automatically apply to all of the classes in which you are enrolled and using iClicker.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingNine">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
+                What do I do if I accidentally registered the wrong remote ID?
+              </button>
+            </h2>
+            <div id="collapseNine" class="accordion-collapse collapse show" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                If you register a wrong remote ID, simply remove the incorrect entry and register again with the correct information.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTen">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="true" aria-controls="collapseTen">
+                I’ve already used my remote in class before registering it in my LMS. Will I still receive credit for my votes?
+              </button>
+            </h2>
+            <div id="collapseTen" class="accordion-collapse collapse show" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Yes, your votes still count. Your in-class votes were recorded by iClicker and once you register your remote, these votes will be associated with you the next time your instructor syncs the course gradebook or roster.
+              </div>
+            </div>
+            </div>
+    </div>
+    </div>
+  </div>
+</div>
+

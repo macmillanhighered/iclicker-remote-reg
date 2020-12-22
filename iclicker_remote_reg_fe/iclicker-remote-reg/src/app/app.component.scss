@@ -1,0 +1,30 @@
+.heading{
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    background-color: #0069d9;
+    padding: .7em;
+    border-color: #0062cc;
+    margin-bottom: 1em;
+}
+.remove{
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
+#pano{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100%;
+    z-index: 2;
+}
+.blur{
+  -webkit-filter: blur(13px);
+  -moz-filter: blur(13px);
+  -o-filter: blur(13px);
+  -ms-filter: blur(13px);
+  filter: blur(13px);z-index:2
+}
