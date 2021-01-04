@@ -5,7 +5,7 @@ RUN useradd --create-home --shell /bin/bash ubuntu
 RUN echo 'ubuntu:password' | chpasswd
 RUN usermod -a -G sudo ubuntu
 RUN apt-get clean
-RUN apt update
+RUN apt update --fix-missing
 RUN apt-get install -y build-essential
 RUN apt-get install -y checkinstall
 RUN apt-get install -y libreadline-gplv2-dev
