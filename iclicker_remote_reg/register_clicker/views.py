@@ -8,7 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 from django.template import Context, loader
 import json
+from django.views.decorators.clickjacking import xframe_options_exempt
 
+@xframe_options_exempt
 @csrf_exempt
 def landingHomePage(request):
     if(request.method == 'POST'):
