@@ -8,7 +8,7 @@ export class CommonService {
 
 
   searchClickers(data) {
-    return this.http.post(environment.endpoint + 'search-clickers', {
+    return this.http.post('/search-clickers', {
       "student_id": data['student_id'],
       "email_id": data['email_id'],
       "addURL": data['addUrl'],
@@ -16,11 +16,11 @@ export class CommonService {
   }
 
   getCountryList() {
-    return this.http.get(environment.endpoint + 'get-country-list')
+    return this.http.get('/get-country-list')
   }
 
   removeClicker(data){
-    return this.http.post(environment.endpoint + 'remove-clicker', {
+    return this.http.post('/remove-clicker', {
       "student_id": data['studentId'],
       "email_id": data['email'],
       "addURL": data['addURL'],
@@ -28,13 +28,13 @@ export class CommonService {
   }
 
   registerClicker(data){
-    return this.http.post(environment.endpoint + 'add-clicker', data);
+    return this.http.post('/add-clicker', data);
   }
 
   doesClickerExist(data){
-    return this.http.post(environment.endpoint + 'does-clicker-exist', data);
+    return this.http.post('/does-clicker-exist', data);
   }
   updateClicker(data){
-    return this.http.post(environment.endpoint + 'update-clicker', data);
+    return this.http.post('/update-clicker', data);
   }
 }
