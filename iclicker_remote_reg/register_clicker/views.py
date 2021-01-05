@@ -73,3 +73,5 @@ def updateClicker(request):
     return HttpResponse(resp)
 
 
+def ping(request):
+   return HttpResponse({"msg": "Hello world"})

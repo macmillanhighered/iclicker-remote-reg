@@ -26,7 +26,8 @@ urlpatterns = [
     path('get-country-list', views.getCountryList),
     path('add-clicker', views.addClicker),
     path('does-clicker-exist', views.doesClickerExist),
-    path('update-clicker', views.updateClicker)
+    path('update-clicker', views.updateClicker),
+    path('ping/', views.ping, name="ping")
 ]
 
 if settings.DEBUG:
