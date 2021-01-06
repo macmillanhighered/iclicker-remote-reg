@@ -20,11 +20,11 @@ export class AppComponent implements OnInit{
   addURL : any = '';
   studentId : any = '';
   loader: boolean = true;
-  
+
   ngOnInit(){
     const CLICKER_SHOW_PAYMENT_GATEWAY = 265;
     const CLICKER_STUDENTID_CLICKERID_MATCH = 255;
-    const CLICKER_STUDENTNAME_CLICKERID_MATCH = 260; 
+    const CLICKER_STUDENTNAME_CLICKERID_MATCH = 260;
     const CLICKER_NEW_REGISTRATION = 250;
 
     this.commonService.getCountryList().subscribe(resp =>{
@@ -43,15 +43,26 @@ export class AppComponent implements OnInit{
       this.studentId = initData['student_id']
       this.commonService.searchClickers(initData).subscribe(resp=>{
         this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
+        this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
+          if(clicker.dateAdded && clicker.dateAdded.length>10){
+            clicker.dateAdded = clicker.dateAdded.substring(0,10)
+          }
+        })
         this.loader = false;
       })
     }
     else{
       this.commonService.searchClickers(clicker).subscribe(resp=>{
         this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
+        this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
+          if(clicker.dateAdded && clicker.dateAdded.length>10){
+              clicker.dateAdded = clicker.dateAdded.substring(0,10)
+          }
+        })
         this.loader = false;
       })
     }
+    this.clickerId = '';
   }
   removeClickerId(clicker){
     this.loader = true;

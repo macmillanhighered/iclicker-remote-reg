@@ -10,12 +10,12 @@
   </div>
   <div class="row" [ngClass] ="{'blur':loader}">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-      <div style="color:red;">Please use Chrome browser for the best registration experience.</div>
+      <!-- <div style="color:red;">Please use Chrome browser for the best registration experience.</div> -->
       <div>Enter your 8-character remote ID and other information below…</div>
       <form style="margin-top: 1em;">
         <div class="form-group mb-3">
           <label for="remoteId">Remote ID:</label>
-          <input type="text" name="clickerId" class="form-control" id="remoteId" [(ngModel)]="clickerId" aria-describedby="Remote Id" placeholder="Enter Remote Id" required>
+          <input type="text" name="clickerId" class="form-control" id="remoteId" [(ngModel)]="clickerId" aria-describedby="Remote Id" placeholder="Enter Remote Id" required minlength="8">
         </div>
         <div class="form-group mb-3">
           <label for="email">Email address</label>
@@ -27,9 +27,9 @@
             <option *ngFor="let x of countries" [value]="x.countryCode" [selected]="country.countryCode == x.countryCode">{{x.countryName}}</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary" (click)="register()">Register</button>
+        <button type="submit" [disabled] = "!clickerId || !emailId || clickerId.length < 8" class="btn btn-primary" (click)="register()">Register</button>
       </form>
-      <table class="table" *ngIf="clickerRegs.length">
+      <table class="table" *ngIf="clickerRegs.length" style="margin-top:5%">
         <thead>
           <tr>
             <th scope="col">Remote ID</th>
