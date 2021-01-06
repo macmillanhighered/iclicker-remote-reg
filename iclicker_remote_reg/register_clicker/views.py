@@ -14,6 +14,9 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 @csrf_exempt
 def landingHomePage(request):
     if(request.method == 'POST'):
+        if('custom_domain_url' not in request.POST['custom_domain_url']){
+            HttpResponse("domain url not given")
+        }
         template = loader.get_template('app-launch.html')
         body_dict = {'student_id':request.POST['user_id'],
         'email_id':request.POST['lis_person_contact_email_primary'],
