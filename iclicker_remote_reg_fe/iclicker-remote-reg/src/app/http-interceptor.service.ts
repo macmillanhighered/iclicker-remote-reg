@@ -12,7 +12,8 @@ export class HttpInterceptorService implements HttpInterceptor{
     return next.handle(request).pipe(
       catchError((error : HttpErrorResponse) => {
         // we can return a generic error-dialog also from here
-        alert("A server error occured :: " + error.error.error.message);
+        console.log(error.message)
+        alert("A server error occured :: " + error.message);
         return throwError(error)
       })
     )

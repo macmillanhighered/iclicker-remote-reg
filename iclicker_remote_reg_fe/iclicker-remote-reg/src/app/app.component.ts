@@ -49,10 +49,13 @@ export class AppComponent implements OnInit{
           }
         })
         this.loader = false;
+      },
+      (err) => {
+        this.loader = false;
       })
     }
     else{
-      this.commonService.searchClickers(clicker).subscribe(resp=>{
+      this.commonService.searchClickers(clicker).subscribe((resp) => {
         this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
         this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
           if(clicker.dateAdded && clicker.dateAdded.length>10){
@@ -60,6 +63,9 @@ export class AppComponent implements OnInit{
           }
         })
         this.loader = false;
+      },
+      (err) => {
+      this.loader = false;
       })
     }
     this.clickerId = '';
@@ -90,6 +96,9 @@ export class AppComponent implements OnInit{
           const data = {'student_id' : resp['studentId'],'email_id' : resp['email'], 'addUrl': resp['addURL']}
           this.searchClicker(data)
           console.log(resp);
+        },
+        (err) => {
+          this.loader = false;
         })
       }
     })
