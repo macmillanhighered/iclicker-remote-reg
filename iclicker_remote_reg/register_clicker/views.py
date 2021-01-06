@@ -15,7 +15,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 def landingHomePage(request):
     if(request.method == 'POST'):
         template = loader.get_template('app-launch.html')
-        body_dict = {'student_id':request.POST['custom_canvas_user_id'],
+        body_dict = {'student_id':request.POST['user_id'],
         'email_id':request.POST['lis_person_contact_email_primary'],
         'addUrl':request.POST['custom_domain_url'],
         'firstName':request.POST['lis_person_name_given'],
