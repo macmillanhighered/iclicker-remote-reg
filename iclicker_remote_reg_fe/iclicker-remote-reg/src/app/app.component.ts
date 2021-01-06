@@ -29,8 +29,8 @@ export class AppComponent implements OnInit{
 
     this.commonService.getCountryList().subscribe(resp =>{
       this.countries = resp;
+      this.searchClicker()
     })
-    this.searchClicker()
   }
 
   searchClicker(clicker?){
@@ -41,6 +41,11 @@ export class AppComponent implements OnInit{
       this.lastName = initData['lastName']
       this.addURL = initData['addUrl']
       this.studentId = initData['student_id']
+      if(initData['countryCode']){
+        this.country = _.find(this.countries, (item)=>{
+          return item.countryCode === initData['countryCode']
+        })
+      }
       this.commonService.searchClickers(initData).subscribe(resp=>{
         this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
         this.clickerRegs = _.each(this.clickerRegs, (clicker) => {

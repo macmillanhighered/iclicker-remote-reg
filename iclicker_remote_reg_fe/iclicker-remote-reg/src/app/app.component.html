@@ -19,7 +19,15 @@
         </div>
         <div class="form-group mb-3">
           <label for="email">Email address</label>
-          <input type="email" name="emailId" class="form-control" [(ngModel)]="emailId" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+          <input type="email" name="emailId" class="form-control" [(ngModel)]="emailId" id="email" aria-describedby="emailHelp" placeholder="Enter email" required email pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #contactemail="ngModel">
+          <div class="md-errors-spacer" style="color:red" [hidden]="contactemail.valid || contactemail.untouched">
+            <div  *ngIf="contactemail.errors && contactemail.errors.required">
+                Email is required
+            </div>
+            <div  *ngIf="contactemail.errors && contactemail.errors.pattern">
+                Email is invalid
+            </div>
+          </div>
         </div>
         <div class="form-group mb-3">
           <label for="country">Country</label>
@@ -27,7 +35,7 @@
             <option *ngFor="let x of countries" [value]="x.countryCode" [selected]="country.countryCode == x.countryCode">{{x.countryName}}</option>
           </select>
         </div>
-        <button type="submit" [disabled] = "!clickerId || !emailId || clickerId.length < 8" class="btn btn-primary" (click)="register()">Register</button>
+        <button type="submit" [disabled] = "!clickerId || !emailId || clickerId.length < 8 || contactemail.errors" class="btn btn-primary" (click)="register()">Register</button>
       </form>
       <table class="table" *ngIf="clickerRegs.length" style="margin-top:5%">
         <thead>
