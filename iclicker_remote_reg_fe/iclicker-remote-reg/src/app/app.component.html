@@ -15,11 +15,11 @@
       <form style="margin-top: 1em;">
         <div class="form-group mb-3">
           <label for="remoteId">Remote ID:</label>
-          <input type="text" name="clickerId" class="form-control" id="remoteId" [(ngModel)]="clickerId" aria-describedby="Remote Id" placeholder="Enter Remote Id" required minlength="8" maxlength="8" pattern="^[0-9a-fA-F]+$" #clicker="ngModel">
+          <input type="text" name="clickerId" class="form-control" id="remoteId" [(ngModel)]="clickerId" aria-describedby="Remote Id" placeholder="Enter Remote ID" required minlength="8" maxlength="8" pattern="^[0-9a-fA-F]+$" #clicker="ngModel">
           <div class="md-errors-spacer" style="color:red" [hidden]="clicker.valid || clicker.untouched">
-            <div  *ngIf="clicker.errors && clicker.errors.required">
+            <!-- <div  *ngIf="clicker.errors && clicker.errors.required">
                 Clicker ID is required
-            </div>
+            </div> -->
             <div  *ngIf="clicker.errors && clicker.errors.pattern">
                 Remote ID entered is invalid. Make sure that you entered the correct 8-character code. Code entry is restricted to letters A-F and numbers 0-9.
             </div>
