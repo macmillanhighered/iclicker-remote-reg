@@ -83,11 +83,16 @@ export class AppComponent implements OnInit{
   }
   register(){
     this.loader = true;
-    const data = {'lastName' : this.lastName, 'clickerId' : this.clickerId,
+    const data = {'lastName' : this.lastName, 'clickerId' : this.clickerId.toUpperCase(),
                   'email' : this.emailId, 'addURL': this.addURL,
                 'countryCode' : this.country.countryCode, 'firstName' : this.firstName,
               'studentId' : this.studentId}
     this.commonService.doesClickerExist(data).subscribe(resp =>{
+      if(resp['code'] == 422){
+        alert("Remote ID entered is invalid. Make sure that you entered the correct 8-character code. Code entry is restricted to letters A-F and numbers 0-9");
+        this.loader = false;
+        return
+      }
       if(resp['status'] === 265 || resp['status'] === 250 ){
         this.commonService.registerClicker(data).subscribe(resp =>{
           const data = {'student_id' : resp['studentId'],'email_id' : resp['email'], 'addUrl': resp['addURL']}

@@ -24,7 +24,7 @@ export class CommonService {
       "student_id": data['studentId'],
       "email_id": data['email'],
       "addURL": data['addURL'],
-      "clickerId": data['clickerId']});
+      "clickerId": data['clickerId'].toUpperCase()});
   }
 
   registerClicker(data){
