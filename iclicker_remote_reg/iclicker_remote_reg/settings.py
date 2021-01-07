@@ -129,4 +129,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000"
 ]
+#keeping localhost instead of None for testing purposes, should remove it in production
+API_ENDPOINT = "http://localhost:8000"
+if 'API_ENDPOINT' in os.environ:
+    API_ENDPOINT = os.environ["API_ENDPOINT"]
+print("API_ENDPOINT::", API_ENDPOINT)
 
