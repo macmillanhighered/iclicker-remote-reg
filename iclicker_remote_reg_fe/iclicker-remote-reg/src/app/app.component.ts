@@ -20,6 +20,7 @@ export class AppComponent implements OnInit{
   addURL : any = '';
   studentId : any = '';
   loader: boolean = true;
+  show_be_error : boolean = false;
 
   ngOnInit(){
     const CLICKER_SHOW_PAYMENT_GATEWAY = 265;
@@ -77,19 +78,21 @@ export class AppComponent implements OnInit{
   }
   removeClickerId(clicker){
     this.loader = true;
+    this.show_be_error = false;
     this.commonService.removeClicker(clicker).subscribe(resp=>{
       this.searchClicker()
     })
   }
   register(){
     this.loader = true;
+    this.show_be_error = false;
     const data = {'lastName' : this.lastName, 'clickerId' : this.clickerId.toUpperCase(),
                   'email' : this.emailId, 'addURL': this.addURL,
                 'countryCode' : this.country.countryCode, 'firstName' : this.firstName,
               'studentId' : this.studentId}
     this.commonService.doesClickerExist(data).subscribe(resp =>{
       if(resp['code'] == 422){
-        alert("Remote ID entered is invalid. Make sure that you entered the correct 8-character code. Code entry is restricted to letters A-F and numbers 0-9");
+        this.show_be_error = true;
         this.loader = false;
         return
       }
@@ -97,7 +100,6 @@ export class AppComponent implements OnInit{
         this.commonService.registerClicker(data).subscribe(resp =>{
           const data = {'student_id' : resp['studentId'],'email_id' : resp['email'], 'addUrl': resp['addURL']}
           this.searchClicker(data)
-          console.log(resp);
         })
       }
       else{
@@ -105,7 +107,6 @@ export class AppComponent implements OnInit{
         this.commonService.updateClicker(data).subscribe(resp =>{
           const data = {'student_id' : resp['studentId'],'email_id' : resp['email'], 'addUrl': resp['addURL']}
           this.searchClicker(data)
-          console.log(resp);
         },
         (err) => {
           this.loader = false;

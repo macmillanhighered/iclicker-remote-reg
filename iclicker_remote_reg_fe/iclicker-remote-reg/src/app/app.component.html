@@ -45,6 +45,9 @@
         </div>
         <button type="submit" [disabled] = "!clickerId || !emailId || clickerId.length != 8 || contactemail.errors || clicker.errors" class="btn btn-primary" (click)="register()">Register</button>
       </form>
+      <div class="be_error" *ngIf="show_be_error">
+        Remote ID entered is invalid. Make sure that you entered the correct 8-character code. Code entry is restricted to letters A-F and numbers 0-9.
+      </div>
       <table class="table" *ngIf="clickerRegs.length" style="margin-top:5%">
         <thead>
           <tr>
