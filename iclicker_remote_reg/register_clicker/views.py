@@ -18,20 +18,29 @@ def landingHomePage(request):
     if(request.method == 'POST'):
         addURL = ''
         countryCode = ''
+        studentId = ''
         if('custom_domain_url' in request.POST):
             addURL = request.POST['custom_domain_url']
         elif('domain_url' in request.POST):
             addURL = request.POST['domain_url']
         elif('custom_url' in request.POST):
             addURL = request.POST['custom_url']
+        elif('url' in request.POST):
+            addURL = request.POST['url']
         else:
             print(request.POST)
         if('custom_cc' in request.POST):
             countryCode = request.POST['custom_cc']
+        if('custom_canvas_user_id' in request.POST);
+            studentId = request.POST['custom_canvas_user_id']
+        elif('ext_d2l_username' in request.POST):
+            studentId = request.POST['ext_d2l_username']
+        else:
+            return HttpResponse('Incomplete information received, please contact support.')
         template = loader.get_template('app-launch.html')
-        body_dict = {'student_id':request.POST['user_id'],
+        body_dict = {'student_id':studentId,
         'email_id':request.POST['lis_person_contact_email_primary'],
-        'addUrl':request.POST['custom_domain_url'],
+        'addUrl':addURL,
         'firstName':request.POST['lis_person_name_given'],
         'lastName':request.POST['lis_person_name_family'],
         'countryCode':countryCode}
