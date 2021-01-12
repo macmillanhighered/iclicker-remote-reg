@@ -11,7 +11,6 @@
   <div class="row" [ngClass] ="{'blur':loader}">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
       <!-- <div style="color:red;">Please use Chrome browser for the best registration experience.</div> -->
-      <div style="color:red;" *ngIf = "disableRegButtonPerm" >Incomplete information received, please contact support.</div>
       <div>Enter your 8-character remote ID and other information below…</div>
       <form style="margin-top: 1em;">
         <div class="form-group mb-3">
@@ -49,6 +48,7 @@
       <div class="be_error" *ngIf="show_be_error">
         Remote ID entered is invalid. Make sure that you entered the correct 8-character code. Code entry is restricted to letters A-F and numbers 0-9.
       </div>
+      <div class="be_error" *ngIf = "disableRegButtonPerm" >Incomplete information received, please contact support.</div>
       <table class="table" *ngIf="clickerRegs.length" style="margin-top:5%">
         <thead>
           <tr>
