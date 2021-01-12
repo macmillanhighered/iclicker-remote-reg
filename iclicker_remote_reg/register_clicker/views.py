@@ -31,7 +31,7 @@ def landingHomePage(request):
             print(request.POST)
         if('custom_cc' in request.POST):
             countryCode = request.POST['custom_cc']
-        if('custom_canvas_user_id' in request.POST);
+        if('custom_canvas_user_id' in request.POST):
             studentId = request.POST['custom_canvas_user_id']
         elif('ext_d2l_username' in request.POST):
             studentId = request.POST['ext_d2l_username']
