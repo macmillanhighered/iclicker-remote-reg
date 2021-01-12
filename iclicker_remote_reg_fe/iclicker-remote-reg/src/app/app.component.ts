@@ -21,6 +21,7 @@ export class AppComponent implements OnInit{
   studentId : any = '';
   loader: boolean = true;
   show_be_error : boolean = false;
+  disableRegButtonPerm : boolean = false;
 
   ngOnInit(){
     const CLICKER_SHOW_PAYMENT_GATEWAY = 265;
@@ -32,6 +33,12 @@ export class AppComponent implements OnInit{
       this.countries = resp;
       this.searchClicker()
     })
+    if(localStorage.getItem('initData')){
+      const data = JSON.parse(localStorage.getItem('initData'))
+      if(data['firstName'] === '' || data['lastName'] === '' || data['student_id'] === ''){
+        this.disableRegButtonPerm = true;
+      }
+    }
   }
 
   searchClicker(clicker?){

@@ -19,6 +19,15 @@ def landingHomePage(request):
         addURL = ''
         countryCode = ''
         studentId = ''
+        email = ''
+        firstName = ''
+        lastName = ''
+        if('lis_person_contact_email_primary' in request.POST):
+            email = request.POST['lis_person_contact_email_primary']
+        if('lis_person_name_given' in  request.POST):
+            firstName = request.POST['lis_person_name_given']
+        if('lis_person_name_family' in  request.POST):
+            lastName = request.POST['lis_person_name_family']
         if('custom_domain_url' in request.POST):
             addURL = request.POST['custom_domain_url']
         elif('domain_url' in request.POST):
@@ -36,13 +45,14 @@ def landingHomePage(request):
         elif('ext_d2l_username' in request.POST):
             studentId = request.POST['ext_d2l_username']
         else:
-            return HttpResponse('Incomplete information received, please contact support.')
+            print('student_id not recieved')
+            #return HttpResponse('Incomplete information received, please contact support.')
         template = loader.get_template('app-launch.html')
         body_dict = {'student_id':studentId,
-        'email_id':request.POST['lis_person_contact_email_primary'],
+        'email_id':email,
         'addUrl':addURL,
-        'firstName':request.POST['lis_person_name_given'],
-        'lastName':request.POST['lis_person_name_family'],
+        'firstName':firstName,
+        'lastName':lastName,
         'countryCode':countryCode}
         context = {'body_dict' : body_dict}
         return HttpResponse(template.render(body_dict))
