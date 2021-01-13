@@ -7,18 +7,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <script type="text/javascript">
-      localStorage.setItem('initData',JSON.stringify({
-        'email_id':'{{email_id}}',
-        'student_id':'{{student_id}}',
-        'addUrl':'{{addUrl}}',
-        'firstName':'{{firstName}}',
-        'lastName':'{{lastName}}',
-        'countryCode':'{{countryCode}}'
-      }))
-  </script>
 </head>
 <body>
+<input id="emailId" type="hidden" value="{{ email_id }}">
+<input id="studentId" type="hidden" value="{{ student_id }}">
+<input id="addUrl" type="hidden" value="{{ addUrl }}">
+<input id="firstName" type="hidden" value="{{ firstName }}">
+<input id="lastName" type="hidden" value="{{ lastName }}">
+<input id="countryCode" type="hidden" value="{{ countryCode }}">
   <app-root></app-root>
 </body>
 </html>

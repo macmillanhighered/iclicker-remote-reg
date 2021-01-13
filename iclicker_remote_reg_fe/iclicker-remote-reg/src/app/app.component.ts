@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
   lastName : any = '';
   addURL : any = '';
   studentId : any = '';
+  countryCode : any = '';
   loader: boolean = true;
   show_be_error : boolean = false;
   disableRegButtonPerm : boolean = false;
@@ -33,28 +34,25 @@ export class AppComponent implements OnInit{
       this.countries = resp;
       this.searchClicker()
     })
-    if(localStorage.getItem('initData')){
-      const data = JSON.parse(localStorage.getItem('initData'))
-      if(data['firstName'] === '' || data['lastName'] === '' || data['student_id'] === ''){
-        this.disableRegButtonPerm = true;
-      }
+    this.firstName = (<HTMLInputElement>document.getElementById('firstName')).value;
+    this.lastName = (<HTMLInputElement>document.getElementById('lastName')).value;
+    this.studentId = (<HTMLInputElement>document.getElementById('studentId')).value;
+    this.countryCode = (<HTMLInputElement>document.getElementById('countryCode')).value;
+    this.emailId = (<HTMLInputElement>document.getElementById('emailId')).value
+    this.addURL = (<HTMLInputElement>document.getElementById('addUrl')).value
+    if(!this.firstName || !this.lastName || !this.studentId){
+      this.disableRegButtonPerm = true;
     }
   }
 
   searchClicker(clicker?){
-    if(!clicker && localStorage.getItem('initData')){
-      const initData = JSON.parse(localStorage.getItem('initData'))
-      this.emailId = initData['email_id']
-      this.firstName = initData['firstName']
-      this.lastName = initData['lastName']
-      this.addURL = initData['addUrl']
-      this.studentId = initData['student_id']
-      if(initData['countryCode']){
+    if(!clicker){
+      if(this.countryCode){
         this.country = _.find(this.countries, (item)=>{
-          return item.countryCode === initData['countryCode']
+          return item.countryCode === this.countryCode
         })
       }
-      this.commonService.searchClickers(initData).subscribe(resp=>{
+      this.commonService.searchClickers({'student_id' : this.studentId, 'email_id' : this.emailId, 'addUrl' : this.addURL}).subscribe(resp=>{
         this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
         this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
           if(clicker.dateAdded && clicker.dateAdded.length>10){
