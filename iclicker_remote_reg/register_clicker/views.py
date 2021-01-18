@@ -61,7 +61,7 @@ def landingHomePage(request):
 @csrf_exempt
 def searchClickers(request):
     body_dict = json.loads(request.body)
-    resp = requests.post(API_ENDPOINT + '/v1/registration/info/clicker/search',json={"authentication" : "Edmbt7x3aGKLNHrL","lastName": None,"studentId": body_dict['student_id'],"email": body_dict['email_id'],"addURL": body_dict['addURL']})
+    resp = requests.post(API_ENDPOINT + '/v1/registration/info/clicker/search',json={"authentication" : "Edmbt7x3aGKLNHrL","lastName": None,"studentId": body_dict['student_id'],"email": None,"addURL": body_dict['addURL']})
     return HttpResponse(resp)
 
 @csrf_exempt
