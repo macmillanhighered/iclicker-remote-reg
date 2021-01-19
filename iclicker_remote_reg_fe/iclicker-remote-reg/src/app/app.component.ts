@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from './common.service';
 import * as _ from 'lodash';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,8 @@ import * as _ from 'lodash';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  constructor(private commonService : CommonService){}
+  constructor(private commonService : CommonService,
+    private date : DatePipe){}
 
   countries :any = [];
   country : any = {"countryCode":"USA","countryName":"United States","showSeq":100}
@@ -53,12 +55,15 @@ export class AppComponent implements OnInit{
         })
       }
       this.commonService.searchClickers({'student_id' : this.studentId, 'email_id' : this.emailId, 'addUrl' : this.addURL}).subscribe(resp=>{
-        this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
-        this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
-          if(clicker.dateAdded && clicker.dateAdded.length>10){
-            clicker.dateAdded = clicker.dateAdded.substring(0,10)
-          }
-        })
+        if(resp['code'] !== 422){
+          this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
+          this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
+            if(clicker.dateAdded && clicker.dateAdded.length>10){
+              //clicker.dateAdded = clicker.dateAdded.substring(0,10)
+              clicker.dateAdded = this.date.transform(clicker.dateAdded, 'MMM-dd-yyyy')
+            }
+          })
+        }
         this.loader = false;
       },
       (err) => {
@@ -67,12 +72,15 @@ export class AppComponent implements OnInit{
     }
     else{
       this.commonService.searchClickers(clicker).subscribe((resp) => {
-        this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
-        this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
-          if(clicker.dateAdded && clicker.dateAdded.length>10){
-              clicker.dateAdded = clicker.dateAdded.substring(0,10)
-          }
-        })
+        if(resp['code'] !== 422){
+          this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
+          this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
+            if(clicker.dateAdded && clicker.dateAdded.length>10){
+                //clicker.dateAdded = clicker.dateAdded.substring(0,10)
+                clicker.dateAdded = this.date.transform(clicker.dateAdded, 'MMM-dd-yyyy')
+            }
+          })
+        }
         this.loader = false;
       },
       (err) => {
@@ -119,5 +127,9 @@ export class AppComponent implements OnInit{
       }
     })
 
+  }
+
+  countryDisplay(coun) {
+    return _.find(this.countries,(country) => country.countryCode === coun)
   }
 }

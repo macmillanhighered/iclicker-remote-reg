@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CommonService } from './common.service'
 import { HttpInterceptorService } from './http-interceptor.service'
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [CommonService, {
+  providers: [CommonService, DatePipe, {
       provide : HTTP_INTERCEPTORS,
       useClass : HttpInterceptorService,
       multi : true

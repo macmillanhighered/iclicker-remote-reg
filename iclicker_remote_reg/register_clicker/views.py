@@ -15,48 +15,46 @@ API_ENDPOINT = settings.API_ENDPOINT
 @xframe_options_exempt
 @csrf_exempt
 def landingHomePage(request):
-    if(request.method == 'POST'):
-        addURL = ''
-        countryCode = ''
-        studentId = ''
-        email = ''
-        firstName = ''
-        lastName = ''
-        if('lis_person_contact_email_primary' in request.POST):
-            email = request.POST['lis_person_contact_email_primary']
-        if('lis_person_name_given' in  request.POST):
-            firstName = request.POST['lis_person_name_given']
-        if('lis_person_name_family' in  request.POST):
-            lastName = request.POST['lis_person_name_family']
-        if('custom_domain_url' in request.POST):
-            addURL = request.POST['custom_domain_url']
-        elif('domain_url' in request.POST):
-            addURL = request.POST['domain_url']
-        elif('custom_url' in request.POST):
-            addURL = request.POST['custom_url']
-        elif('url' in request.POST):
-            addURL = request.POST['url']
-        else:
-            print(request.POST)
-        if('custom_cc' in request.POST):
-            countryCode = request.POST['custom_cc']
-        if('custom_canvas_user_id' in request.POST):
-            studentId = request.POST['custom_canvas_user_id']
-        elif('ext_d2l_username' in request.POST):
-            studentId = request.POST['ext_d2l_username']
-        else:
-            print('student_id not recieved')
-            #return HttpResponse('Incomplete information received, please contact support.')
-        template = loader.get_template('app-launch.html')
-        body_dict = {'student_id':studentId,
-        'email_id':email,
-        'addUrl':addURL,
-        'firstName':firstName,
-        'lastName':lastName,
-        'countryCode':countryCode}
-        context = {'body_dict' : body_dict}
-        return HttpResponse(template.render(body_dict))
-    return HttpResponse('get request not allowed')
+    addURL = ''
+    countryCode = ''
+    studentId = ''
+    email = ''
+    firstName = ''
+    lastName = ''
+    if('lis_person_contact_email_primary' in request.POST):
+        email = request.POST['lis_person_contact_email_primary']
+    if('lis_person_name_given' in  request.POST):
+        firstName = request.POST['lis_person_name_given']
+    if('lis_person_name_family' in  request.POST):
+        lastName = request.POST['lis_person_name_family']
+    if('custom_domain_url' in request.POST):
+        addURL = request.POST['custom_domain_url']
+    elif('domain_url' in request.POST):
+        addURL = request.POST['domain_url']
+    elif('custom_url' in request.POST):
+        addURL = request.POST['custom_url']
+    elif('url' in request.POST):
+        addURL = request.POST['url']
+    else:
+        print(request.POST)
+    if('custom_cc' in request.POST):
+        countryCode = request.POST['custom_cc']
+    if('custom_canvas_user_id' in request.POST):
+        studentId = request.POST['custom_canvas_user_id']
+    elif('ext_d2l_username' in request.POST):
+        studentId = request.POST['ext_d2l_username']
+    else:
+        print('student_id not recieved')
+        #return HttpResponse('Incomplete information received, please contact support.')
+    template = loader.get_template('app-launch.html')
+    body_dict = {'student_id':studentId,
+    'email_id':email,
+    'addUrl':addURL,
+    'firstName':firstName,
+    'lastName':lastName,
+    'countryCode':countryCode}
+    context = {'body_dict' : body_dict}
+    return HttpResponse(template.render(body_dict))
 
 @csrf_exempt
 def searchClickers(request):

@@ -61,7 +61,7 @@
         <tbody>
           <tr *ngFor="let clicker of clickerRegs">
             <td scope="col">{{clicker.clickerId}}</td>
-            <td scope="col">{{clicker.countryCode}}</td>
+            <td scope="col">{{countryDisplay(clicker.countryCode).countryName}}</td>
             <td scope="col">{{clicker.dateAdded}}</td>
             <td scope="col" style="text-decoration: underline;color:blue;cursor: pointer;" (click)="removeClickerId(clicker)">Remove</td>
           </tr>
