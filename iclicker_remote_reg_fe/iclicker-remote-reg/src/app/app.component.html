@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="form-group mb-3">
-          <label for="email">Email address</label>
+          <label for="email">Email</label>
           <input type="email" name="emailId" class="form-control" [(ngModel)]="emailId" id="email" aria-describedby="emailHelp" placeholder="Enter email" required email pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #contactemail="ngModel">
           <div class="md-errors-spacer" style="color:red" [hidden]="contactemail.valid || contactemail.untouched">
             <div  *ngIf="contactemail.errors && contactemail.errors.required">
