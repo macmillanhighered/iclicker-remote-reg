@@ -43,7 +43,11 @@
             <option *ngFor="let x of countries" [value]="x.countryCode" [selected]="country.countryCode == x.countryCode">{{x.countryName}}</option>
           </select>
         </div>
-        <button type="submit" [disabled] = "!clickerId || !emailId || clickerId.length != 8 || contactemail.errors || clicker.errors || disableRegButtonPerm" class="btn btn-primary" (click)="register()">Register</button>
+        <button type="submit" 
+        [disabled] = "!clickerId || !emailId || clickerId.length != 8 || contactemail.errors || clicker.errors || disableRegButtonPerm"
+        class="primary-button"
+        (click)="register()"
+        >Register</button>
       </form>
       <div class="be_error" *ngIf="show_be_error">
         Remote ID entered is invalid. Make sure that you entered the correct 8-character code. Code entry is restricted to letters A-F and numbers 0-9.
