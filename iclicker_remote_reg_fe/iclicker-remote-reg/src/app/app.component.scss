@@ -44,7 +44,7 @@
   background: #1565C0;
   box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  font-family: Open Sans;
+  font-family: 'Open Sans Semibold',sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -56,6 +56,10 @@
   cursor: pointer;
   &:hover{
     background: #001747;
+  }
+  &:focus{
+    background: #001747;
+    box-shadow: 0px 0px 5px #1565C0;
   }
   &:disabled{
     background: #E8E8E8;
