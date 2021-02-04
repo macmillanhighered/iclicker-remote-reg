@@ -134,10 +134,10 @@ export class AppComponent implements OnInit{
     this.show_be_error = false;
     this.commonLogParams['remoteId'] = clicker.clickerId;
     this.commonLogParams['log_type'] = 'iclicker_remote_reg_action';
+    this.commonLogParams['action_type'] = 'REMOVE';
+    this.commonLogParams['event_id'] = this.generateId(32);
     this.commonLogParams = Object.assign({
       'userId' : this.studentId,
-      'event_id' : this.generateId(32),
-      'action_type' : 'REMOVE',
       'referral_event_id' : this.referral_event_id,
       'referral_event_type' : this.referral_event_type
     }, this.commonLogParams)
@@ -159,9 +159,9 @@ export class AppComponent implements OnInit{
       if(resp['code'] == 422){
         this.commonLogParams['remoteId'] = this.clickerId;
         this.commonLogParams['log_type'] = 'iclicker_remote_reg_incorrect_info_view';
+        this.commonLogParams['event_id'] = this.generateId(32);
         this.commonLogParams = Object.assign({
           'userId' : this.studentId,
-          'event_id' : this.generateId(32),
           'referral_event_id' : this.referral_event_id,
           'referral_event_type' : this.referral_event_type
         }, this.commonLogParams)
@@ -173,13 +173,12 @@ export class AppComponent implements OnInit{
         return
       }
       if(resp['status'] === 265 || resp['status'] === 250 ){
+        this.commonLogParams['event_id'] = this.generateId(32);
         this.commonLogParams['remoteId'] = this.clickerId;
         this.commonLogParams['log_type'] = 'iclicker_remote_reg_incorrect_info_view';
+        this.commonLogParams['action_type'] = 'REGISTER'
         this.commonLogParams = Object.assign({
           'userId' : this.studentId,
-          'log_type' : 'iclicker_remote_reg_incorrect_info_view',
-          'event_id' : this.generateId(32),
-          'action_type' : 'REGISTER',
           'referral_event_id' : this.referral_event_id,
           'referral_event_type' : this.referral_event_type
         }, this.commonLogParams)
@@ -194,11 +193,10 @@ export class AppComponent implements OnInit{
       else{
         this.commonLogParams['remoteId'] = this.clickerId;
         this.commonLogParams['log_type'] = 'iclicker_remote_reg_action';
+        this.commonLogParams['action_type'] = 'UPDATE';
+        this.commonLogParams['event_id'] = this.generateId(32);
         this.commonLogParams = Object.assign({
           'userId' : this.studentId,
-          'log_type' : 'iclicker_remote_reg_action',
-          'event_id' : this.generateId(32),
-          'action_type' : 'UPDATE',
           'referral_event_id' : this.referral_event_id,
           'referral_event_type' : this.referral_event_type
         }, this.commonLogParams)
@@ -226,10 +224,10 @@ export class AppComponent implements OnInit{
     this.commonLogParams['remoteId'] = this.clickerId;
     this.commonLogParams['faqItem'] = index;
     this.commonLogParams['log_type'] = 'iclicker_remote_reg_action';
+    this.commonLogParams['action_type'] = 'FAQ_CLICK';
+    this.commonLogParams['event_id'] = this.generateId(32);
     this.commonLogParams = Object.assign({
       'userId' : this.studentId,
-      'event_id' : this.generateId(32),
-      'action_type' : 'FAQ_CLICK',
       'referral_event_id' : this.referral_event_id,
       'referral_event_type' : this.referral_event_type
     }, this.commonLogParams)
@@ -241,10 +239,10 @@ export class AppComponent implements OnInit{
   logEventSupport(index){
     this.commonLogParams['faqItem'] = index;
     this.commonLogParams['log_type'] = 'iclicker_remote_reg_faq_item_action';
+    this.commonLogParams['action_type'] = 'SUPPORT_LINK_CLICK';
+    this.commonLogParams['event_id'] = this.generateId(32);
     this.commonLogParams = Object.assign({
       'userId' : this.studentId,
-      'event_id' : this.generateId(32),
-      'action_type' : 'SUPPORT_LINK_CLICK',
       'referral_event_id' : this.referral_event_id,
       'referral_event_type' : this.referral_event_type
     }, this.commonLogParams)
