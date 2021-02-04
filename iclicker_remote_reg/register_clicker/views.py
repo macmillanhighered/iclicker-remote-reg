@@ -11,7 +11,7 @@ import json
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.conf import settings
 API_ENDPOINT = settings.API_ENDPOINT
-
+env = settings.ENV
 @xframe_options_exempt
 @csrf_exempt
 def landingHomePage(request):
@@ -21,6 +21,7 @@ def landingHomePage(request):
     email = ''
     firstName = ''
     lastName = ''
+    context_id = ''
     if('lis_person_contact_email_primary' in request.POST):
         email = request.POST['lis_person_contact_email_primary']
     if('lis_person_name_given' in  request.POST):
@@ -45,6 +46,9 @@ def landingHomePage(request):
         studentId = request.POST['ext_d2l_username']
     else:
         print('student_id not recieved')
+    if('context_id' in request.POST):
+        context_id = request.POST['context_id']
+
         #return HttpResponse('Incomplete information received, please contact support.')
     template = loader.get_template('app-launch.html')
     body_dict = {'student_id':studentId,
@@ -52,7 +56,9 @@ def landingHomePage(request):
     'addUrl':addURL,
     'firstName':firstName,
     'lastName':lastName,
-    'countryCode':countryCode}
+    'countryCode':countryCode,
+    'env' : env,
+    'context_id' : context_id}
     context = {'body_dict' : body_dict}
     return HttpResponse(template.render(body_dict))
 

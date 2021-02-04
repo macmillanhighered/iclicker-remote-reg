@@ -131,7 +131,11 @@ CORS_ALLOWED_ORIGINS = [
 ]
 #keeping localhost instead of None for testing purposes, should remove it in production
 API_ENDPOINT = "http://iclicker-services-beta.reef-education.com/"
+ENV = 'beta'
 if 'API_ENDPOINT' in os.environ:
     API_ENDPOINT = os.environ["API_ENDPOINT"]
+if 'env' in os.environ:
+    ENV = os.environ["env"]
+print("env::", ENV)
 print("API_ENDPOINT::", API_ENDPOINT)
 

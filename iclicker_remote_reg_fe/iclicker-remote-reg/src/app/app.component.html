@@ -78,7 +78,7 @@
       </div>
       <div id="accordion" class="accordion" style="margin-top: 2em;">
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
+            <h2 class="accordion-header" id="headingOne" (click)="logAccordion($event,1)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                 Where do I find my remote ID?
               </button>
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
+            <h2 class="accordion-header" id="headingTwo" (click)="logAccordion($event,2)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="accordion-button collapsed">
                 What do I do if my registration fails in Safari?
               </button>
@@ -103,19 +103,19 @@
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
+            <h2 class="accordion-header" id="headingThree" (click)="logAccordion($event,3)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class="accordion-button collapsed">
                 What do I do if I cannot read the ID printed on my remote?
               </button>
             </h2>
             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                If your remote ID has rubbed off or is illegible and you do not have a secondary ID location on your remote, go to <a id="HyperLink1" href="https://www.iclicker.com/support" target="_blank" style="color:blue;">support.iclicker.com</a> for troubleshooting instructions.
+                If your remote ID has rubbed off or is illegible and you do not have a secondary ID location on your remote, go to <a id="HyperLink1" href="https://www.iclicker.com/support" target="_blank" style="color:blue;" (click)="logEventSupport(3)">support.iclicker.com</a> for troubleshooting instructions.
               </div>
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
+            <h2 class="accordion-header" id="headingFour" (click)="logAccordion($event,4)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" class="accordion-button collapsed">
                 Why do I get an “Invalid Remote ID” error when I try to register my remote?
               </button>
@@ -127,7 +127,7 @@
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFive">
+            <h2 class="accordion-header" id="headingFive" (click)="logAccordion($event,5)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" class="accordion-button collapsed">
                 I've lost/broken my remote. Can I register another remote?
               </button>
@@ -139,7 +139,7 @@
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingSix">
+            <h2 class="accordion-header" id="headingSix" (click)="logAccordion($event,6)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix" class="accordion-button collapsed">
                If I register a remote in my LMS, does that automatically mean I can use it in all my classes?
               </button>
@@ -151,7 +151,7 @@
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingSeven">
+            <h2 class="accordion-header" id="headingSeven" (click)="logAccordion($event,7)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven" class="accordion-button collapsed">
                I registered my remote, why is my registration still not appearing in class?
               </button>
@@ -163,7 +163,7 @@
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingEight">
+            <h2 class="accordion-header" id="headingEight" (click)="logAccordion($event,8)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight" class="accordion-button collapsed">
                 I use my remote for multiple classes. Do I need to register my information for each class?
               </button>
@@ -175,7 +175,7 @@
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingNine">
+            <h2 class="accordion-header" id="headingNine" (click)="logAccordion($event,9)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine" class="accordion-button collapsed">
                 What do I do if I accidentally registered the wrong remote ID?
               </button>
@@ -187,7 +187,7 @@
             </div>
           </div>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTen">
+            <h2 class="accordion-header" id="headingTen" (click)="logAccordion($event,10)">
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen" class="accordion-button collapsed">
                 I’ve already used my remote in class before registering it in my LMS. Will I still receive credit for my votes?
               </button>
