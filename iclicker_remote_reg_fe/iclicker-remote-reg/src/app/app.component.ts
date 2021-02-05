@@ -144,8 +144,8 @@ export class AppComponent implements OnInit {
       'userId': this.studentId
     }, this.commonLogParams)
     this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
-      this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
-      this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
+      this.referral_event_type = 'iclicker_remote_reg_action'
+      this.referral_event_id = this.commonLogParams['event_id']
     })
     this.commonService.removeClicker(clicker).subscribe(resp => {
       this.searchClicker()
@@ -171,8 +171,8 @@ export class AppComponent implements OnInit {
           'userId': this.studentId
         }, this.commonLogParams)
         this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
-          this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
-          this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
+          this.referral_event_type = 'iclicker_remote_reg_incorrect_info_view'
+          this.referral_event_id = this.commonLogParams['event_id']
         })
         this.show_be_error = true;
         this.loader = false;
@@ -189,8 +189,8 @@ export class AppComponent implements OnInit {
           'userId': this.studentId
         }, this.commonLogParams)
         this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
-          this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
-          this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
+          this.referral_event_type = 'iclicker_remote_reg_incorrect_info_view'
+          this.referral_event_id = this.commonLogParams['event_id']
         })
         this.commonService.registerClicker(data).subscribe(resp => {
           const data = { 'student_id': resp['studentId'], 'email_id': resp['email'], 'addUrl': resp['addURL'] }
@@ -208,8 +208,8 @@ export class AppComponent implements OnInit {
           'userId': this.studentId
         }, this.commonLogParams)
         this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
-          this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
-          this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
+          this.referral_event_type = 'iclicker_remote_reg_action'
+          this.referral_event_id = this.commonLogParams['event_id']
         })
         data['id'] = resp['id']
         this.commonService.updateClicker(data).subscribe(resp => {
@@ -240,8 +240,8 @@ export class AppComponent implements OnInit {
       'userId': this.studentId
     }, this.commonLogParams)
     this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
-      this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
-      this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
+      this.referral_event_type = 'iclicker_remote_reg_action'
+      this.referral_event_id = this.commonLogParams['event_id']
     })
   }
 
@@ -256,8 +256,8 @@ export class AppComponent implements OnInit {
       'userId': this.studentId
     }, this.commonLogParams)
     this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
-      this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
-      this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
+      this.referral_event_type = 'iclicker_remote_reg_faq_item_action'
+      this.referral_event_id = this.commonLogParams['event_id']
     })
   }
 }
