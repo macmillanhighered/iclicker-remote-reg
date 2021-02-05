@@ -54,17 +54,18 @@ export class AppComponent implements OnInit {
     this.env = (<HTMLInputElement>document.getElementById('env')).value
     this.context_id = (<HTMLInputElement>document.getElementById('context_id')).value
     this.commonLogParams['log_type'] = 'iclicker_remote_reg_view';
+    let event_id = this.generateId(32);
     this.commonLogParams = Object.assign({
       'referralUrl': document.referrer,
       'userId': this.studentId,
       'courseId': this.context_id,
-      'event_id': this.generateId(32),
+      'event_id': event_id,
       'referral_event_id': this.referral_event_id,
       'referral_event_type': this.referral_event_type
     }, this.commonLogParams)
     this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
-      this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
-      this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
+      this.referral_event_type = 'iclicker_remote_reg_view';
+      this.referral_event_id = event_id;
     })
     if (!this.firstName || !this.lastName || !this.studentId) {
       this.disableRegButtonPerm = true;
