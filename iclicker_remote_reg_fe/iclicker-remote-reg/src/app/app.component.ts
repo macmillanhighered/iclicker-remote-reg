@@ -10,38 +10,38 @@ import { EventLogsService } from './event-logs.service'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
-  constructor(private commonService : CommonService,
-    private date : DatePipe,
-    private eventLogsServ : EventLogsService){}
+export class AppComponent implements OnInit {
+  constructor(private commonService: CommonService,
+    private date: DatePipe,
+    private eventLogsServ: EventLogsService) { }
 
-  countries :any = [];
-  country : any = {"countryCode":"USA","countryName":"United States","showSeq":100}
-  clickerRegs : any = [];
-  emailId : any = '';
-  clickerId : any = '';
-  firstName : any = '';
-  lastName : any = '';
-  addURL : any = '';
-  env : any = '';
-  context_id : any = '';
-  studentId : any = '';
-  countryCode : any = '';
+  countries: any = [];
+  country: any = { "countryCode": "USA", "countryName": "United States", "showSeq": 100 }
+  clickerRegs: any = [];
+  emailId: any = '';
+  clickerId: any = '';
+  firstName: any = '';
+  lastName: any = '';
+  addURL: any = '';
+  env: any = '';
+  context_id: any = '';
+  studentId: any = '';
+  countryCode: any = '';
   loader: boolean = true;
-  show_be_error : boolean = false;
-  disableRegButtonPerm : boolean = false;
-  commonLogParams : any = {};
-  referral_event_type : any = '';
-  referral_event_id : any = '';
-  ngOnInit(){
+  show_be_error: boolean = false;
+  disableRegButtonPerm: boolean = false;
+  commonLogParams: any = {};
+  referral_event_type: any = '';
+  referral_event_id: any = '';
+  ngOnInit() {
     this.commonLogParams = new CommonLogParams;
-    
+
     const CLICKER_SHOW_PAYMENT_GATEWAY = 265;
     const CLICKER_STUDENTID_CLICKERID_MATCH = 255;
     const CLICKER_STUDENTNAME_CLICKERID_MATCH = 260;
     const CLICKER_NEW_REGISTRATION = 250;
 
-    this.commonService.getCountryList().subscribe(resp =>{
+    this.commonService.getCountryList().subscribe(resp => {
       this.countries = resp;
       this.searchClicker()
     })
@@ -55,25 +55,26 @@ export class AppComponent implements OnInit{
     this.context_id = (<HTMLInputElement>document.getElementById('context_id')).value
     this.commonLogParams['log_type'] = 'iclicker_remote_reg_view';
     this.commonLogParams = Object.assign({
-      'referralUrl' : document.referrer,
-      'userId' : this.studentId,
-      'courseId' : this.context_id,
-      'event_id' : this.generateId(32),
-      'referral_event_id' : this.referral_event_id,
-      'referral_event_type' : this.referral_event_type
+      'referralUrl': document.referrer,
+      'userId': this.studentId,
+      'courseId': this.context_id,
+      'event_id': this.generateId(32),
+      'referral_event_id': this.referral_event_id,
+      'referral_event_type': this.referral_event_type
     }, this.commonLogParams)
-    this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp)=>{
+    this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
       this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
       this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
     })
-    if(!this.firstName || !this.lastName || !this.studentId){
+    if (!this.firstName || !this.lastName || !this.studentId) {
       this.disableRegButtonPerm = true;
-      this.commonLogParams['log_type'] = 'iclicker_remote_reg_incomplete_info_v';
+      this.commonLogParams['log_type'] = 'iclicker_remote_reg_incomplete_info_view';
       this.commonLogParams = Object.assign({
-        'event_id' : this.generateId(32)
+        'event_id': this.generateId(32)
       }, this.commonLogParams)
-      this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp)=>{
-
+      this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
+        this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
+        this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
       })
     }
   }
@@ -82,23 +83,23 @@ export class AppComponent implements OnInit{
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let charactersLength = characters.length;
-    for (let i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
- }
-  searchClicker(clicker?){
-    if(!clicker){
-      if(this.countryCode){
-        this.country = _.find(this.countries, (item)=>{
+  }
+  searchClicker(clicker?) {
+    if (!clicker) {
+      if (this.countryCode) {
+        this.country = _.find(this.countries, (item) => {
           return item.countryCode === this.countryCode
         })
       }
-      this.commonService.searchClickers({'student_id' : this.studentId, 'email_id' : this.emailId, 'addUrl' : this.addURL}).subscribe(resp=>{
-        if(resp['code'] !== 422){
+      this.commonService.searchClickers({ 'student_id': this.studentId, 'email_id': this.emailId, 'addUrl': this.addURL }).subscribe(resp => {
+        if (resp['code'] !== 422) {
           this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
           this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
-            if(clicker.dateAdded && clicker.dateAdded.length>10){
+            if (clicker.dateAdded && clicker.dateAdded.length > 10) {
               //clicker.dateAdded = clicker.dateAdded.substring(0,10)
               clicker.dateAdded = this.date.transform(clicker.dateAdded, 'MMM-dd-yyyy')
             }
@@ -106,30 +107,30 @@ export class AppComponent implements OnInit{
         }
         this.loader = false;
       },
-      (err) => {
-        this.loader = false;
-      })
+        (err) => {
+          this.loader = false;
+        })
     }
-    else{
+    else {
       this.commonService.searchClickers(clicker).subscribe((resp) => {
-        if(resp['code'] !== 422){
+        if (resp['code'] !== 422) {
           this.clickerRegs = _.filter(resp, (item) => !item.disableFlag)
           this.clickerRegs = _.each(this.clickerRegs, (clicker) => {
-            if(clicker.dateAdded && clicker.dateAdded.length>10){
-                //clicker.dateAdded = clicker.dateAdded.substring(0,10)
-                clicker.dateAdded = this.date.transform(clicker.dateAdded, 'MMM-dd-yyyy')
+            if (clicker.dateAdded && clicker.dateAdded.length > 10) {
+              //clicker.dateAdded = clicker.dateAdded.substring(0,10)
+              clicker.dateAdded = this.date.transform(clicker.dateAdded, 'MMM-dd-yyyy')
             }
           })
         }
         this.loader = false;
       },
-      (err) => {
-      this.loader = false;
-      })
+        (err) => {
+          this.loader = false;
+        })
     }
     this.clickerId = '';
   }
-  removeClickerId(clicker){
+  removeClickerId(clicker) {
     this.loader = true;
     this.show_be_error = false;
     this.commonLogParams['remoteId'] = clicker.clickerId;
@@ -137,87 +138,93 @@ export class AppComponent implements OnInit{
     this.commonLogParams['action_type'] = 'REMOVE';
     this.commonLogParams['event_id'] = this.generateId(32);
     this.commonLogParams = Object.assign({
-      'userId' : this.studentId,
-      'referral_event_id' : this.referral_event_id,
-      'referral_event_type' : this.referral_event_type
+      'userId': this.studentId,
+      'referral_event_id': this.referral_event_id,
+      'referral_event_type': this.referral_event_type
     }, this.commonLogParams)
-    this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp)=>{
-
+    this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
+      this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
+      this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
     })
-    this.commonService.removeClicker(clicker).subscribe(resp=>{
+    this.commonService.removeClicker(clicker).subscribe(resp => {
       this.searchClicker()
     })
   }
-  register(){
+  register() {
     this.loader = true;
     this.show_be_error = false;
-    const data = {'lastName' : this.lastName, 'clickerId' : this.clickerId.toUpperCase(),
-                  'email' : this.emailId, 'addURL': this.addURL,
-                'countryCode' : this.country.countryCode, 'firstName' : this.firstName,
-              'studentId' : this.studentId}
-    this.commonService.doesClickerExist(data).subscribe(resp =>{
-      if(resp['code'] == 422){
+    const data = {
+      'lastName': this.lastName, 'clickerId': this.clickerId.toUpperCase(),
+      'email': this.emailId, 'addURL': this.addURL,
+      'countryCode': this.country.countryCode, 'firstName': this.firstName,
+      'studentId': this.studentId
+    }
+    this.commonService.doesClickerExist(data).subscribe(resp => {
+      if (resp['code'] == 422) {
         this.commonLogParams['remoteId'] = this.clickerId;
         this.commonLogParams['log_type'] = 'iclicker_remote_reg_incorrect_info_view';
         this.commonLogParams['event_id'] = this.generateId(32);
         this.commonLogParams = Object.assign({
-          'userId' : this.studentId,
-          'referral_event_id' : this.referral_event_id,
-          'referral_event_type' : this.referral_event_type
+          'userId': this.studentId,
+          'referral_event_id': this.referral_event_id,
+          'referral_event_type': this.referral_event_type
         }, this.commonLogParams)
-        this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp)=>{
-    
+        this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
+          this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
+          this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
         })
         this.show_be_error = true;
         this.loader = false;
         return
       }
-      if(resp['status'] === 265 || resp['status'] === 250 ){
+      if (resp['status'] === 265 || resp['status'] === 250) {
         this.commonLogParams['event_id'] = this.generateId(32);
         this.commonLogParams['remoteId'] = this.clickerId;
         this.commonLogParams['log_type'] = 'iclicker_remote_reg_incorrect_info_view';
         this.commonLogParams['action_type'] = 'REGISTER'
         this.commonLogParams = Object.assign({
-          'userId' : this.studentId,
-          'referral_event_id' : this.referral_event_id,
-          'referral_event_type' : this.referral_event_type
+          'userId': this.studentId,
+          'referral_event_id': this.referral_event_id,
+          'referral_event_type': this.referral_event_type
         }, this.commonLogParams)
-        this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp)=>{
-    
+        this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
+          this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
+          this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
         })
-        this.commonService.registerClicker(data).subscribe(resp =>{
-          const data = {'student_id' : resp['studentId'],'email_id' : resp['email'], 'addUrl': resp['addURL']}
+        this.commonService.registerClicker(data).subscribe(resp => {
+          const data = { 'student_id': resp['studentId'], 'email_id': resp['email'], 'addUrl': resp['addURL'] }
           this.searchClicker(data)
         })
       }
-      else{
+      else {
         this.commonLogParams['remoteId'] = this.clickerId;
         this.commonLogParams['log_type'] = 'iclicker_remote_reg_action';
         this.commonLogParams['action_type'] = 'UPDATE';
         this.commonLogParams['event_id'] = this.generateId(32);
         this.commonLogParams = Object.assign({
-          'userId' : this.studentId,
-          'referral_event_id' : this.referral_event_id,
-          'referral_event_type' : this.referral_event_type
+          'userId': this.studentId,
+          'referral_event_id': this.referral_event_id,
+          'referral_event_type': this.referral_event_type
         }, this.commonLogParams)
-        this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp)=>{
-    
+        this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
+          this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
+          this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
         })
         data['id'] = resp['id']
-        this.commonService.updateClicker(data).subscribe(resp =>{
-          const data = {'student_id' : resp['studentId'],'email_id' : resp['email'], 'addUrl': resp['addURL']}
+        this.commonService.updateClicker(data).subscribe(resp => {
+          const data = { 'student_id': resp['studentId'], 'email_id': resp['email'], 'addUrl': resp['addURL'] }
           this.searchClicker(data)
         },
-        (err) => {
-          this.loader = false;
-        })
+          (err) => {
+            this.loader = false;
+          })
       }
     })
 
   }
 
   countryDisplay(coun) {
-    return _.find(this.countries,(country) => country.countryCode === coun)
+    return _.find(this.countries, (country) => country.countryCode === coun)
   }
 
   logAccordion(target, index) {
@@ -227,27 +234,29 @@ export class AppComponent implements OnInit{
     this.commonLogParams['action_type'] = 'FAQ_CLICK';
     this.commonLogParams['event_id'] = this.generateId(32);
     this.commonLogParams = Object.assign({
-      'userId' : this.studentId,
-      'referral_event_id' : this.referral_event_id,
-      'referral_event_type' : this.referral_event_type
+      'userId': this.studentId,
+      'referral_event_id': this.referral_event_id,
+      'referral_event_type': this.referral_event_type
     }, this.commonLogParams)
-    this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp)=>{
-
+    this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
+      this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
+      this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
     })
   }
 
-  logEventSupport(index){
+  logEventSupport(index) {
     this.commonLogParams['faqItem'] = index;
     this.commonLogParams['log_type'] = 'iclicker_remote_reg_faq_item_action';
     this.commonLogParams['action_type'] = 'SUPPORT_LINK_CLICK';
     this.commonLogParams['event_id'] = this.generateId(32);
     this.commonLogParams = Object.assign({
-      'userId' : this.studentId,
-      'referral_event_id' : this.referral_event_id,
-      'referral_event_type' : this.referral_event_type
+      'userId': this.studentId,
+      'referral_event_id': this.referral_event_id,
+      'referral_event_type': this.referral_event_type
     }, this.commonLogParams)
-    this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp)=>{
-
+    this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
+      this.referral_event_type = resp[0]['ANALYTIC_LOG']['referral_event_id']
+      this.referral_event_id = resp[0]['ANALYTIC_LOG']['referral_event_type']
     })
   }
 }
