@@ -181,7 +181,7 @@ export class AppComponent implements OnInit {
       if (resp['status'] === 265 || resp['status'] === 250) {
         this.commonLogParams['event_id'] = this.generateId(32);
         this.commonLogParams['remoteId'] = this.clickerId;
-        this.commonLogParams['log_type'] = 'iclicker_remote_reg_incorrect_info_view';
+        this.commonLogParams['log_type'] = 'iclicker_remote_reg_action';
         this.commonLogParams['action_type'] = 'REGISTER'
         this.commonLogParams['referral_event_id'] = this.referral_event_id;
         this.commonLogParams['referral_event_type'] = this.referral_event_type;
@@ -189,7 +189,7 @@ export class AppComponent implements OnInit {
           'userId': this.studentId
         }, this.commonLogParams)
         this.eventLogsServ.logEvents(this.commonLogParams).subscribe((resp) => {
-          this.referral_event_type = 'iclicker_remote_reg_incorrect_info_view'
+          this.referral_event_type = 'iclicker_remote_reg_action'
           this.referral_event_id = this.commonLogParams['event_id']
         })
         this.commonService.registerClicker(data).subscribe(resp => {
