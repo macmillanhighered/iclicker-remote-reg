@@ -11,7 +11,7 @@ export class EventLogsService {
       this.url = 'https://iclicker-dev-inst-analytics.macmillanlearning.com/'
     }
     else{
-      this.url = 'https://iclicker-inst-analytics.macmillanlearning.com/'
+      this.url = 'https://iclicker-prod-inst-analytics.macmillanlearning.com/'
     }
    }
 
